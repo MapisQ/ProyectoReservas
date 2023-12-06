@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+    application:
+      name: proyectoReservas
+    datasource:
+      url: jdbc:postgresql://localhost:5432/project_reserve
+      username: admin_reserve
+      password: 'reservas'
+      driver-class-name: org.postgresql.Driver
+jpa:
+ defer-datasource-initialization: true
+ hibernate:
+   ddl-auto:update
+properties:
+   hibernate:
+      format-sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+show-sql: true
+
+
