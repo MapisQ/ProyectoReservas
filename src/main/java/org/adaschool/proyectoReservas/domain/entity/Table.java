@@ -15,7 +15,7 @@ import java.util.Objects;
 @ToString
 @Builder
 @jakarta.persistence.Table(name = "\"table\"")
-public class Tables {
+public class Table {
     @Id
     @SequenceGenerator(name = "id_table", sequenceName = "id_table")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_table_generator")
@@ -30,7 +30,7 @@ public class Tables {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tables tables = (Tables) o;
+        Table tables = (Table) o;
         return Objects.equals(id, tables.id) && Objects.equals(chairsNumber, tables.chairsNumber) && Objects.equals(booking, tables.booking);
     }
 
