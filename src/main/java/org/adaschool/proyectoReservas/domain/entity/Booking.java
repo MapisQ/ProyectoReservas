@@ -16,7 +16,7 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "booking")
+@jakarta.persistence.Table(name = "booking")
 public class Booking {
 
     @Id
@@ -35,7 +35,7 @@ public class Booking {
     private Client client;
     @OneToMany
     @ToString.Exclude
-    private List<Tables> table;
+    private List<Table> table;
 
     @Override
     public boolean equals(Object o) {

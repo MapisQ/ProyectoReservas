@@ -35,7 +35,7 @@ public record RoleService(RoleRepository roleRepository) {
         Optional<Role> optionalRole = findRoleById(idRole);
         if (optionalRole.isPresent()) {
             Role roleValue = optionalRole.get();
-            roleValue.setName(roleValue.getName());
+            roleValue.setRoles(roleValue.getRoles());
         }
         throw new ReservationException(EMessage.ROLE_NOT_FOUND);
     }

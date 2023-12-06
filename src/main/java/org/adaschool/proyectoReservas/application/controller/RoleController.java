@@ -17,20 +17,20 @@ public record RoleController(RoleService roleService) {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all/roles")
     public ResponseEntity<?> findAll() {
         roleService.listRoles();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/search/{id}")
-    public ResponseEntity<?> findRoleById(@PathVariable Integer idRole) {
+    @GetMapping("/search/{idRole}")
+    public ResponseEntity<?> findRoleById(@PathVariable("idRole") Integer idRole) {
         roleService.findRoleById(idRole);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> substractRole(@PathVariable Integer idRole) throws ReservationException {
+    @DeleteMapping("delete/{idRole}")
+    public ResponseEntity<?> substractRole(@PathVariable("idRole") Integer idRole) throws ReservationException {
         roleService.substractRoleById(idRole);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
