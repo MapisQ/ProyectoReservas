@@ -1,4 +1,4 @@
-package org.adaschool.proyectoReservas.application.message;
+package org.adaschool.proyectoReservas.application.lasting;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

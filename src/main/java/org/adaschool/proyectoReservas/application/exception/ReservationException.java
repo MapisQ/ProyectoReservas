@@ -1,6 +1,6 @@
 package org.adaschool.proyectoReservas.application.exception;
 
-import org.adaschool.proyectoReservas.application.message.EMessage;
+import org.adaschool.proyectoReservas.application.lasting.EMessage;
 import org.springframework.http.HttpStatus;
 
 public class ReservationException extends Exception {

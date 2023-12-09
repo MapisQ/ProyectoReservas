@@ -3,8 +3,9 @@ package org.adaschool.proyectoReservas.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.adaschool.proyectoReservas.application.enums.EState;
+import org.adaschool.proyectoReservas.application.lasting.EStateReservation;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -23,16 +24,17 @@ public class Booking {
     @SequenceGenerator(name = "id_booking", sequenceName = "id_booking")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_booking_generator")
     private Integer id;
-    private Date dateBooking;
+    private Date bookingDate;
+    private Time bookingHour;
     private String description;
-    private EState state;
+
+    @Enumerated(EnumType.ORDINAL)
+    private EStateReservation stateReservation;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "id_client")
-    private Client client;
+
     @OneToMany
     @ToString.Exclude
     private List<Table> table;
@@ -42,11 +44,11 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(dateBooking, booking.dateBooking) && Objects.equals(description, booking.description) && state == booking.state && Objects.equals(user, booking.user) && Objects.equals(client, booking.client) && Objects.equals(table, booking.table);
+        return Objects.equals(id, booking.id) && Objects.equals(bookingDate, booking.bookingDate) && Objects.equals(bookingHour, booking.bookingHour) && Objects.equals(description, booking.description) && stateReservation == booking.stateReservation && Objects.equals(user, booking.user) && Objects.equals(table, booking.table);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateBooking, description, state, user, client, table);
+        return Objects.hash(id, bookingDate, bookingHour, description, stateReservation, user, table);
     }
 }
