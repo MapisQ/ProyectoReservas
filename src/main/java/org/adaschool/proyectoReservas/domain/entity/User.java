@@ -28,11 +28,10 @@ public class User implements UserDetails{
     private String password;
     private String email;
     private boolean enable;
+    private Integer document;
 
     @Enumerated(EnumType.ORDINAL)
     private ERoles roles;
-    private Integer document;
-
 
     @Override
     public boolean equals(Object o) {
