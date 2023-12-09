@@ -1,7 +1,7 @@
 package org.adaschool.proyectoReservas.application.service;
 
 import org.adaschool.proyectoReservas.application.exception.ReservationException;
-import org.adaschool.proyectoReservas.application.message.EMessage;
+import org.adaschool.proyectoReservas.application.lasting.EMessage;
 import org.adaschool.proyectoReservas.domain.entity.User;
 import org.adaschool.proyectoReservas.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public record UserService(UserRepository userRepository) {
             User userValue = optionalUser.get();
             userValue.setName(userValue.getName());
             userValue.setLastName(userValue.getLastName());
-            userValue.setRole(userValue.getRole());
+            userValue.setRoles(userValue.getRoles());
 
             createUser(userValue);
         }

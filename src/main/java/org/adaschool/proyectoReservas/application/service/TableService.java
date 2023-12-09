@@ -1,7 +1,7 @@
 package org.adaschool.proyectoReservas.application.service;
 
 import org.adaschool.proyectoReservas.application.exception.ReservationException;
-import org.adaschool.proyectoReservas.application.message.EMessage;
+import org.adaschool.proyectoReservas.application.lasting.EMessage;
 import org.adaschool.proyectoReservas.domain.entity.Table;
 import org.adaschool.proyectoReservas.domain.repository.TableRepository;
 import org.springframework.stereotype.Service;

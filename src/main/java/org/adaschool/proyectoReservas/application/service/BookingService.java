@@ -1,7 +1,7 @@
 package org.adaschool.proyectoReservas.application.service;
 
 import org.adaschool.proyectoReservas.application.exception.ReservationException;
-import org.adaschool.proyectoReservas.application.message.EMessage;
+import org.adaschool.proyectoReservas.application.lasting.EMessage;
 import org.adaschool.proyectoReservas.domain.entity.Booking;
 import org.adaschool.proyectoReservas.domain.repository.BookingRepository;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,10 @@ public record BookingService(BookingRepository bookingRepository) {
         Optional<Booking> bookingOptional = bookingRepository.findById(idBooking);
         if (bookingOptional.isPresent()) {
             Booking bookingValue = bookingOptional.get();
-            bookingValue.setDateBooking(bookingValue.getDateBooking());
+            bookingValue.setBookingDate(bookingValue.getBookingDate());
             bookingValue.setDescription(bookingValue.getDescription());
-            bookingValue.setState(bookingValue.getState());
+            bookingValue.setBookingHour(bookingValue.getBookingHour());
+            bookingValue.setStateReservation(bookingValue.getStateReservation());
         }
         throw new ReservationException(EMessage.BOOKING_NOT_FOUND);
     }
