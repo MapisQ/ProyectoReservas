@@ -25,10 +25,10 @@ public class User implements UserDetails{
     private Integer id;
     private String name;
     private String lastName;
-    private String password;
     private String email;
+    private String password;
     private boolean enable;
-    private Integer document;
+    private String document;
 
     @Enumerated(EnumType.ORDINAL)
     private ERoles roles;

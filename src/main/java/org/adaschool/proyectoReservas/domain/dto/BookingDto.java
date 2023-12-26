@@ -3,15 +3,15 @@ package org.adaschool.proyectoReservas.domain.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.adaschool.proyectoReservas.application.lasting.EStateReservation;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record BookingDto(
         Integer id,
-        Date bookingDate,
-        Time bookingHour,
+        LocalDate bookingDate,
+        LocalTime bookingHour,
         String description,
         EStateReservation stateReservation,
-        UserDto userDto
+        UserDto user
 ) {                                         }

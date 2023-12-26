@@ -11,6 +11,7 @@ public record UserDto(
         String email,
         String password,
         boolean enable,
-        ERoles roles,
-        Integer document
+        String document,
+        ERoles roles
+
 ) {}

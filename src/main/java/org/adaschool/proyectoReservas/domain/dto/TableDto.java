@@ -8,5 +8,5 @@ public record TableDto(
         Integer id,
         Integer chairsNumber,
         EStateTable stateTable,
-        BookingDto bookingDto
+        BookingDto booking
 ) {}

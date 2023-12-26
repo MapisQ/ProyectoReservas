@@ -6,6 +6,8 @@ import lombok.*;
 import org.adaschool.proyectoReservas.application.lasting.EStateReservation;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -24,8 +26,8 @@ public class Booking {
     @SequenceGenerator(name = "id_booking", sequenceName = "id_booking")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_booking_generator")
     private Integer id;
-    private Date bookingDate;
-    private Time bookingHour;
+    private LocalDate bookingDate;
+    private LocalTime bookingHour;
     private String description;
 
     @Enumerated(EnumType.ORDINAL)
