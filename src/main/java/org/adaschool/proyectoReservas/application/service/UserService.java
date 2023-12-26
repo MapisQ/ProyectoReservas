@@ -41,12 +41,6 @@ public record UserService(UserRepository userRepository, IUserMapper mapper) {
         userRepository.save(user);
     }
 
-    public void substractUser(Integer idUser) throws ReservationException {
-        User user = userRepository.findById(idUser)
-                .orElseThrow(() -> new ReservationException(EMessage.USER_NOT_FOUND));
-        userRepository.delete(user);
-    }
-
 
 
 

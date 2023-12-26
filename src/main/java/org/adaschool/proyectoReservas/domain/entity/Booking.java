@@ -37,20 +37,21 @@ public class Booking {
     @JoinColumn(name = "id_user")
     private User user;
 
-    @OneToMany
-    @ToString.Exclude
-    private List<Table> table;
+//    @OneToMany
+//    @ToString.Exclude
+//    private List<Table> table;
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(bookingDate, booking.bookingDate) && Objects.equals(bookingHour, booking.bookingHour) && Objects.equals(description, booking.description) && stateReservation == booking.stateReservation && Objects.equals(user, booking.user) && Objects.equals(table, booking.table);
+        return Objects.equals(id, booking.id) && Objects.equals(bookingDate, booking.bookingDate) && Objects.equals(bookingHour, booking.bookingHour) && Objects.equals(description, booking.description) && stateReservation == booking.stateReservation && Objects.equals(user, booking.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookingDate, bookingHour, description, stateReservation, user, table);
+        return Objects.hash(id, bookingDate, bookingHour, description, stateReservation, user);
     }
 }

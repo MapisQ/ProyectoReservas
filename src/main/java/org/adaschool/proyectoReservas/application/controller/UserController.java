@@ -38,10 +38,4 @@ public record UserController(UserService userService) {
       userService.updateUser(idUser, userDto);
       return new ResponseEntity<>(HttpStatus.OK);
    }
-
-   @DeleteMapping("delete/{idUser}")
-   public ResponseEntity<?> substractUser(@PathVariable("idUser") Integer idUser) throws ReservationException, ReservationException {
-      userService.substractUser(idUser);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-   }
 }

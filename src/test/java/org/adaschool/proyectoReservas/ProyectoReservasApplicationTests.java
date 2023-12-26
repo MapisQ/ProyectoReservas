@@ -57,15 +57,19 @@ class ProyectoReservasApplicationTests {
 		bookingService = new BookingService(bookingRepository,mapperB);
 	}
 
+	User user = new User(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
+	Booking booking = new Booking(1,LocalDate.of(2023, 5, 10), LocalTime.of(14, 30),"para un cumpleaños", EStateReservation.Active,user);
+	Table table = new Table(1,6,EStateTable.Available,booking);
+
 	@Test
 	void contextLoads() {}
 
 	@Test
 	void saveUser(){
 
-		UserDto userDto = new UserDto(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
-
+		UserDto userDto = mapper.toDto(user);
 		userService.createUser(userDto);
+
 
 		User result = mapper.toEntity(userDto);
 
@@ -83,8 +87,7 @@ class ProyectoReservasApplicationTests {
 	@Test
 	void findUserById() throws ReservationException {
 
-		UserDto userDto = new UserDto(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
-
+		UserDto userDto = mapper.toDto(user);
 		int result = userDto.id();
 		int expected = 1;
 
@@ -110,7 +113,8 @@ class ProyectoReservasApplicationTests {
 
 	@Test
 	void updateUser() throws ReservationException {
-		UserDto userDto = new UserDto(1,"Maria","Quito","mapis2321@gmail.com","Mapis1150", true, "1027283212", ERoles.Client);
+
+		UserDto userDto = mapper.toDto(user);
 		Integer userDtoId = userDto.id();
 
 		try {
@@ -133,47 +137,36 @@ class ProyectoReservasApplicationTests {
 	}
 
 	@Test
-	void substractUserById() throws ReservationException {
-
-		UserDto userDto = new UserDto(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
-
-		Integer userDtoId = userDto.id();
-		int result = userDtoId;
-		int expected = 1;
-
-		try {
-			userService.substractUser(userDtoId);
-			assertEquals(expected, result);
-		} catch (ReservationException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
 	void saveBooking(){
 
-		UserDto userDto = new UserDto(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
-		BookingDto bookingDto = new BookingDto(1,LocalDate.of(2023, 5, 10), LocalTime.of(14, 30),"Cumpleaños", EStateReservation.Active,userDto);
+		UserDto userDto = mapper.toDto(user);
+		BookingDto bookingDto = mapperB.toDto(booking);
 
 		bookingService.createBooking(bookingDto);
-		Booking result = mapperB.toEntity(bookingDto);
 
-		assertNotNull(result);
-		assertEquals(bookingDto.id(), result.getId());
-		assertEquals(bookingDto.bookingDate(), result.getBookingDate());
-		assertEquals(bookingDto.bookingHour(), result.getBookingHour());
-		assertEquals(bookingDto.description(), result.getDescription());
-		assertEquals(bookingDto.stateReservation(), result.getStateReservation());
-		assertEquals(bookingDto.user(), result.getUser());
+		assertNotNull(booking);
+		assertEquals(bookingDto.id(), booking.getId());
+		assertEquals(bookingDto.bookingDate(), booking.getBookingDate());
+		assertEquals(bookingDto.bookingHour(), booking.getBookingHour());
+		assertEquals(bookingDto.description(), booking.getDescription());
+		assertEquals(bookingDto.stateReservation(), booking.getStateReservation());
+
+		assertEquals(userDto.id(), booking.getUser().getId());
+		assertEquals(userDto.name(), booking.getUser().getName());
+		assertEquals(userDto.lastName(), booking.getUser().getLastName());
+		assertEquals(userDto.email(), booking.getUser().getEmail());
+		assertEquals(userDto.password(), booking.getUser().getPassword());
+		assertEquals(userDto.enable(), booking.getUser().isEnable());
+		assertEquals(userDto.document(), booking.getUser().getDocument());
+		assertEquals(userDto.roles(), booking.getUser().getRoles());
 	}
 
 	@Test
 	void findBookingById() throws ReservationException {
 
-		UserDto userDto = new UserDto(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
-		BookingDto bookingDto = new BookingDto(1,LocalDate.of(2023, 5, 10), LocalTime.of(14, 30),"Cumpleaños", EStateReservation.Active,userDto);
+		BookingDto bookingDto = mapperB.toDto(booking);
 
-        int result = bookingDto.id();
+		int result = bookingDto.id();
 		int expected = 1;
 
 		try {
@@ -198,50 +191,60 @@ class ProyectoReservasApplicationTests {
 
 	@Test
 	void updateBooking() throws ReservationException {
-		UserDto userDto = new UserDto(1,"Maria","Quito","mapis2321@gmail.com","Mapis1150", true, "1027283212", ERoles.Client);
-		BookingDto bookingDto = new BookingDto(1,LocalDate.of(2023, 5, 10), LocalTime.of(14, 30),"Cumpleaños", EStateReservation.Active,userDto);
+
+		BookingDto bookingDto = mapperB.toDto(booking);
 		Integer bookingDtoId = bookingDto.id();
 
 		try {
-			bookingService.updateBooking(bookingDtoId,bookingDto);
-			Booking result = mapperB.toEntity(bookingDto);
 
-			assertNotNull(result);
-			assertEquals(bookingDto.id(), result.getId());
-			assertEquals(bookingDto.bookingDate(), result.getBookingDate());
-			assertEquals(bookingDto.bookingHour(), result.getBookingHour());
-			assertEquals(bookingDto.description(), result.getDescription());
-			assertEquals(bookingDto.stateReservation(), result.getStateReservation());
-			assertEquals(bookingDto.user(), result.getUser());
+			bookingService.updateBooking(bookingDtoId, bookingDto);
 
-		}catch (ReservationException e){
+			assertNotNull(booking);
+			assertEquals(bookingDto.id(), booking.getId());
+			assertEquals(bookingDto.bookingDate(), booking.getBookingDate());
+			assertEquals(bookingDto.bookingHour(), booking.getBookingHour());
+			assertEquals(bookingDto.description(), booking.getDescription());
+			assertEquals(bookingDto.stateReservation(), booking.getStateReservation());
+
+			UserDto userDto = bookingDto.user();
+			assertEquals(userDto.id(), booking.getUser().getId());
+			assertEquals(userDto.name(), booking.getUser().getName());
+			assertEquals(userDto.lastName(), booking.getUser().getLastName());
+			assertEquals(userDto.email(), booking.getUser().getEmail());
+			assertEquals(userDto.password(), booking.getUser().getPassword());
+			assertEquals(userDto.enable(), booking.getUser().isEnable());
+			assertEquals(userDto.document(), booking.getUser().getDocument());
+			assertEquals(userDto.roles(), booking.getUser().getRoles());
+		} catch (ReservationException e) {
 			e.printStackTrace();
 		}
 	}
+
 	@Test
 	void saveTable(){
 
-		UserDto userDto = new UserDto(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
-		BookingDto bookingDto = new BookingDto(1,LocalDate.of(2023, 5, 10), LocalTime.of(14, 30),"Cumpleaños", EStateReservation.Active,userDto);
-		TableDto tableDto = new TableDto(1,6, EStateTable.Available,bookingDto);
+		BookingDto bookingDto = mapperB.toDto(booking);
+		TableDto tableDto = mapperT.toDto(table);
 
 		tableService.createTable(tableDto);
-		Table result = mapperT.toEntity(tableDto);
 
-		assertNotNull(result);
-		assertEquals(tableDto.id(), result.getId());
-		assertEquals(tableDto.chairsNumber(), result.getChairsNumber());
-		assertEquals(tableDto.stateTable(), result.getStateTable());
-		assertEquals(tableDto.booking(), result.getBooking());
+		assertNotNull(table);
+		assertEquals(tableDto.id(), table.getId());
+		assertEquals(tableDto.chairsNumber(), table.getChairsNumber());
+		assertEquals(tableDto.stateTable(), table.getStateTable());
+
+		assertEquals(bookingDto.id(), table.getBooking().getId());
+		assertEquals(bookingDto.bookingDate(), table.getBooking().getBookingDate());
+		assertEquals(bookingDto.bookingHour(), table.getBooking().getBookingHour());
+		assertEquals(bookingDto.description(), table.getBooking().getDescription());
+		assertEquals(bookingDto.stateReservation(), table.getBooking().getStateReservation());
 	}
+
 
 	@Test
 	void findTableById() throws ReservationException {
 
-		UserDto userDto = new UserDto(1,"Juan","Quito","juanpis1150@gmail.com","Juanito1150", true, "1027283212", ERoles.Client);
-		BookingDto bookingDto = new BookingDto(1,LocalDate.of(2023, 5, 10), LocalTime.of(14, 30),"Cumpleaños", EStateReservation.Active,userDto);
-		TableDto tableDto = new TableDto(1,6, EStateTable.Available,bookingDto);
-
+		TableDto tableDto = mapperT.toDto(table);
 		int result = tableDto.id();
 		int expected = 1;
 
@@ -267,22 +270,34 @@ class ProyectoReservasApplicationTests {
 
 	@Test
 	void updateTable() throws ReservationException {
-		UserDto userDto = new UserDto(1,"Maria","Quito","mapis2321@gmail.com","Mapis1150", true, "1027283212", ERoles.Client);
-		BookingDto bookingDto = new BookingDto(1,LocalDate.of(2023, 5, 10), LocalTime.of(14, 30),"Cumpleaños", EStateReservation.Active,userDto);
-		TableDto tableDto = new TableDto(1,6, EStateTable.Available,bookingDto);
+
+		TableDto tableDto = mapperT.toDto(table);
 		Integer tableDtoId = tableDto.id();
 
 		try {
-			tableService.updateTable(tableDtoId,tableDto);
-			Table result = mapperT.toEntity(tableDto);
+			tableService.updateTable(tableDtoId, tableDto);
 
-			assertNotNull(result);
-			assertEquals(tableDto.id(), result.getId());
-			assertEquals(tableDto.chairsNumber(), result.getChairsNumber());
-			assertEquals(tableDto.stateTable(), result.getStateTable());
-			assertEquals(tableDto.booking(), result.getBooking());
+			assertNotNull(table);
+			assertEquals(tableDto.id(), table.getId());
+			assertEquals(tableDto.chairsNumber(), table.getChairsNumber());
+			assertEquals(tableDto.stateTable(), table.getStateTable());
 
-		}catch (ReservationException e){
+			assertEquals(tableDto.booking().id(), table.getBooking().getId());
+			assertEquals(tableDto.booking().bookingDate(), table.getBooking().getBookingDate());
+			assertEquals(tableDto.booking().bookingHour(), table.getBooking().getBookingHour());
+			assertEquals(tableDto.booking().description(), table.getBooking().getDescription());
+			assertEquals(tableDto.booking().stateReservation(), table.getBooking().getStateReservation());
+
+			assertEquals(tableDto.booking().user().id(), table.getBooking().getUser().getId());
+			assertEquals(tableDto.booking().user().name(), table.getBooking().getUser().getName());
+			assertEquals(tableDto.booking().user().lastName(), table.getBooking().getUser().getLastName());
+			assertEquals(tableDto.booking().user().email(), table.getBooking().getUser().getEmail());
+			assertEquals(tableDto.booking().user().password(), table.getBooking().getUser().getPassword());
+			assertEquals(tableDto.booking().user().enable(), table.getBooking().getUser().isEnable());
+			assertEquals(tableDto.booking().user().document(), table.getBooking().getUser().getDocument());
+			assertEquals(tableDto.booking().user().roles(), table.getBooking().getUser().getRoles());
+
+		} catch (ReservationException e) {
 			e.printStackTrace();
 		}
 	}
