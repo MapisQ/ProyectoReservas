@@ -1,5 +1,7 @@
 package org.adaschool.proyectoReservas.application.service;
 
+import org.adaschool.proyectoReservas.application.lasting.ERoles;
+import org.adaschool.proyectoReservas.application.mapper.IUserMapper;
 import org.adaschool.proyectoReservas.domain.dto.AuthenticationDto;
 import org.adaschool.proyectoReservas.domain.dto.UserDto;
 import org.adaschool.proyectoReservas.domain.entity.User;
@@ -10,15 +12,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public record AuthenticationService(
+public record   AuthenticationService(
         UserRepository userRepository,
         JwtService jwtService,
         PasswordEncoder passwordEncoder,
-        AuthenticationManager authenticationManager
+        AuthenticationManager authenticationManager,
+        IUserMapper userMapper
 ) {
     public String register(UserDto userDto) {
-        //Falta el tema del mapper para quitar lo de .no se que .otro . así
-        return  null;
+        User user = userMapper.toEntity(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.password()));
+        user.setEnable(true);
+        user.setRoles(ERoles.Client);
+        userRepository.save(user);
+        return jwtService.generateToken(user);
     }
     public String authenticate(AuthenticationDto authenticationDto){
         authenticationManager.authenticate(
@@ -26,6 +33,5 @@ public record AuthenticationService(
         );
         User user = userRepository.findUserByEmail(authenticationDto.email()).orElseThrow();
         return jwtService.generateToken(user);
-
     }
 }

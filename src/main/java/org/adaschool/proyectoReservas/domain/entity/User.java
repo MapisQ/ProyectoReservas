@@ -25,14 +25,13 @@ public class User implements UserDetails{
     private Integer id;
     private String name;
     private String lastName;
-    private String password;
     private String email;
+    private String password;
     private boolean enable;
+    private String document;
 
     @Enumerated(EnumType.ORDINAL)
     private ERoles roles;
-    private Integer document;
-
 
     @Override
     public boolean equals(Object o) {
