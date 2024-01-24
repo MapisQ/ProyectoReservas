@@ -37,9 +37,9 @@ public class Booking {
     @JoinColumn(name = "id_user")
     private User user;
 
-//    @OneToMany
-//    @ToString.Exclude
-//    private List<Table> table;
+    @OneToMany
+    @ToString.Exclude
+    private List<Table> table;
 
 
     @Override
