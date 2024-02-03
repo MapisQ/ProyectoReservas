@@ -3,7 +3,6 @@ package org.adaschool.proyectoReservas.application.service;
 import org.adaschool.proyectoReservas.application.exception.ReservationException;
 import org.adaschool.proyectoReservas.application.lasting.EMessage;
 import org.adaschool.proyectoReservas.application.mapper.IBookingMapper;
-import org.adaschool.proyectoReservas.application.mapper.base.IBaseMapper;
 import org.adaschool.proyectoReservas.domain.dto.BookingDto;
 import org.adaschool.proyectoReservas.domain.entity.Booking;
 import org.adaschool.proyectoReservas.domain.repository.BookingRepository;
@@ -13,12 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 @Service
 public record BookingService(BookingRepository bookingRepository, IBookingMapper mapper) {
 
     public void createBooking(BookingDto bookingDto) {
-        Booking booking = mapper().toEntity(bookingDto);
+        Booking booking = mapper.toEntity(bookingDto);
         bookingRepository.save(booking);
     }
 
